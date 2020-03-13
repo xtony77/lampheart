@@ -23,10 +23,10 @@ trait View
         $pathsToTemplates = [$basePath . '/resources/views'];
         $pathToCompiledTemplates = $basePath . '/storage/framework/views';
 
-        if (!is_file($pathsToTemplates[0])) {
+        if (!file_exists($pathsToTemplates[0])) {
             throw new \Exception('Templates not exist: '.$pathsToTemplates[0]);
         }
-        if (!is_file($pathToCompiledTemplates)) {
+        if (!file_exists($pathToCompiledTemplates)) {
             throw new \Exception('Compiled templates not exist: '.$pathToCompiledTemplates);
         }
 

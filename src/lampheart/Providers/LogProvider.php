@@ -40,7 +40,11 @@ class LogProvider
     private function errorHandler()
     {
         set_exception_handler(function ($e) {
-
+            echo Response::json([
+                $e->getMessage(),
+                $e->getTrace()
+            ]);
+            exit();
         });
 
         register_shutdown_function(function () {
