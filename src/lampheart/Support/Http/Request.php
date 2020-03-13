@@ -133,7 +133,7 @@ trait Request
     {
         $langPath = dirname(dirname(dirname(dirname(dirname(dirname(dirname(__DIR__))))))).'/resources/lang';
 
-        if (!is_file($langPath)) {
+        if (!file_exists($langPath)) {
             throw new \Exception('Validate localization not exist: '.$langPath);
         }
 
