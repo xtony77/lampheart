@@ -16,7 +16,7 @@ trait View
 {
     public function view($viewName, $templateData)
     {
-        $basePath = dirname(dirname(dirname(dirname(dirname(dirname(__DIR__))))));
+        $basePath = dirname(dirname(dirname(dirname(dirname(dirname(dirname(__DIR__)))))));
 
         // Configuration
         // Note that you can set several directories where your templates are located
