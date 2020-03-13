@@ -60,7 +60,7 @@ if (function_exists('lang') === false) {
 
         $langFilePath = dirname(dirname(dirname(__DIR__))).'/resources/lang/'.$locale;
 
-        if (!file_exists($langFilePath)) {
+        if (!is_file($langFilePath)) {
             throw new \Exception('localization not exist: '.$langFilePath);
         }
 

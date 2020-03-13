@@ -131,9 +131,9 @@ trait Request
      */
     public function requestValidate(array $requests, array $rules)
     {
-        $langPath = dirname(dirname(dirname(dirname(__DIR__)))).'/resources/lang';
+        $langPath = dirname(dirname(dirname(dirname(dirname(dirname(__DIR__)))))).'/resources/lang';
 
-        if (!file_exists($langPath)) {
+        if (!is_file($langPath)) {
             throw new \Exception('Validate localization not exist: '.$langPath);
         }
 

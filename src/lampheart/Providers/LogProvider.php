@@ -13,11 +13,13 @@ class LogProvider
     {
         $this->errorHandler();
 
-        $config = require_once dirname(dirname(dirname(dirname(__DIR__)))).'/config/logging.php';
+        $path = dirname(dirname(dirname(dirname(dirname(dirname(__DIR__)))))).'/config/logging.php';
 
-        if (!file_exists($config)) {
-            throw new \Exception('Log config not exist: '.$config);
+        if (!is_file($path)) {
+            throw new \Exception('Log config not exist: '.$path);
         }
+
+        $config = require_once $path;
 
         $channelName = $config['default'];
         $channel = $config['channels'][$channelName];

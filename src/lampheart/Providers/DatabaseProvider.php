@@ -8,9 +8,9 @@ class DatabaseProvider
 {
     public function __construct()
     {
-        $config = dirname(dirname(dirname(dirname(__DIR__)))).'/config/database.php';
+        $config = dirname(dirname(dirname(dirname(dirname(dirname(__DIR__)))))).'/config/database.php';
 
-        if (!file_exists($config)) {
+        if (!is_file($config)) {
             throw new \Exception('Database config not exist: '.$config);
         }
 

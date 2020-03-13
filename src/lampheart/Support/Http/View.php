@@ -16,17 +16,17 @@ trait View
 {
     public function view($viewName, $templateData)
     {
-        $basePath = dirname(dirname(dirname(dirname(__DIR__))));
+        $basePath = dirname(dirname(dirname(dirname(dirname(dirname(__DIR__))))));
 
         // Configuration
         // Note that you can set several directories where your templates are located
         $pathsToTemplates = [$basePath . '/resources/views'];
         $pathToCompiledTemplates = $basePath . '/storage/framework/views';
 
-        if (!file_exists($pathsToTemplates[0])) {
+        if (!is_file($pathsToTemplates[0])) {
             throw new \Exception('Templates not exist: '.$pathsToTemplates[0]);
         }
-        if (!file_exists($pathToCompiledTemplates)) {
+        if (!is_file($pathToCompiledTemplates)) {
             throw new \Exception('Compiled templates not exist: '.$pathToCompiledTemplates);
         }
 

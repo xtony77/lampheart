@@ -25,9 +25,9 @@ class RouteProvider
                 return;
             }
 
-            $routerPath = dirname(dirname(dirname(dirname(__DIR__)))).'/routes/web.php';
+            $routerPath = dirname(dirname(dirname(dirname(dirname(dirname(__DIR__)))))).'/routes/web.php';
 
-            if (!file_exists($routerPath)) {
+            if (!is_file($routerPath)) {
                 throw new \Exception('Routes not exist: '.$routerPath);
             }
 
