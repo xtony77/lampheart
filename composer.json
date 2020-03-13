@@ -3,7 +3,6 @@
     "description": "The Lantern Framework.",
     "keywords": ["framework", "lantern", "lampheart"],
     "license": "MIT",
-    "type": "project",
     "authors": [
         {
             "name": "xtony77",
