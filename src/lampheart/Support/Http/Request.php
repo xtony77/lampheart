@@ -182,29 +182,31 @@ trait Request
      *
      * @return	string
      */
-    public function requestIP()
+    public function requestIPs()
     {
-        if (!empty($_SERVER["HTTP_CLIENT_IP"]))
+        $ip_address = [];
+
+        if (!empty($_SERVER["HTTP_CLIENT_IP"]) && $this->validIP($_SERVER["HTTP_CLIENT_IP"]))
         {
-            $ip_address = $_SERVER["HTTP_CLIENT_IP"];
-        }
-        else if (!empty($_SERVER["HTTP_X_FORWARDED_FOR"]))
-        {
-            $ip_address = $_SERVER["HTTP_X_FORWARDED_FOR"];
-        }
-        else if (!empty($_SERVER['REMOTE_ADDR']))
-        {
-            $ip_address = $_SERVER["REMOTE_ADDR"];
-        }
-        else
-        {
-            $ip_address = '0.0.0.0';
+            $ip_address['SERVER']['HTTP_CLIENT_IP'] = $_SERVER["HTTP_CLIENT_IP"];
         }
 
-        if ( ! $this->validIP($ip_address))
+        if (!empty($_SERVER["HTTP_X_FORWARDED_FOR"]) && $this->validIP($_SERVER["HTTP_X_FORWARDED_FOR"]))
         {
-            $ip_address = '0.0.0.0';
+            $ip_address['SERVER']['HTTP_X_FORWARDED_FOR'] = $_SERVER["HTTP_X_FORWARDED_FOR"];
         }
+
+        if (!empty($_SERVER['REMOTE_ADDR']) && $this->validIP($_SERVER["REMOTE_ADDR"]))
+        {
+            $ip_address['SERVER']['REMOTE_ADDR'] = $_SERVER["REMOTE_ADDR"];
+        }
+
+        if (empty($ip_address))
+        {
+            $ip_address['SERVER']['EMPTY_HEADER'] = '0.0.0.0';
+        }
+
+        $ip_address[0] = reset($ip_address['SERVER']);
 
         return $ip_address;
     }
