@@ -153,4 +153,27 @@ trait Request
 
         return $requests;
     }
+
+    /**
+     * Request Headers
+     *
+     * In Apache, you can simply call apache_request_headers(), however for
+     * people running other webservers the function is undefined.
+     *
+     * @return array
+     */
+    public function request_headers()
+    {
+        $headers = [];
+
+        foreach ($_SERVER as $key => $val)
+        {
+            if (strncmp($key, 'HTTP_', 5) === 0)
+            {
+                $headers[substr($key, 5)] = $this->_fetch_from_array($_SERVER, $key);
+            }
+        }
+
+        return $headers;
+    }
 }
