@@ -43,10 +43,16 @@ class Redis
             throw new \Exception('Empty redis host and port');
         }
 
-        self::$client = new Client([
+        $options = [
             'scheme' => 'tcp',
             'host'   => env('REDIS_HOST'),
-            'port'   => env('REDIS_PORT'),
-        ]);
+            'port'   => env('REDIS_PORT')
+        ];
+
+        if (!empty(env('REDIS_PASSWORD'))) {
+            $options['password'] = env('REDIS_PASSWORD');
+        }
+
+        self::$client = new Client($options);
     }
 }
