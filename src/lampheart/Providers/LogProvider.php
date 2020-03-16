@@ -66,12 +66,8 @@ class LogProvider
             }
         });
 
-        if (!empty(env('SENTRY_DSN'))) {
-            $client = new Raven_Client(env('SENTRY_DSN'));
-            $error_handler = new Raven_ErrorHandler($client);
-            $error_handler->registerExceptionHandler();
-            $error_handler->registerErrorHandler();
-            $error_handler->registerShutdownFunction();
+        if (!empty(env('SENTRY_DSN')) && env('APP_ENV') !== 'local') {
+            \Sentry\init(['dsn' => env('SENTRY_DSN')]);
         }
     }
 
