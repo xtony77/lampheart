@@ -65,6 +65,14 @@ class LogProvider
                 exit($error['type']);
             }
         });
+
+        if (!empty(env('SENTRY_DSN'))) {
+            $client = new Raven_Client(env('SENTRY_DSN'));
+            $error_handler = new Raven_ErrorHandler($client);
+            $error_handler->registerExceptionHandler();
+            $error_handler->registerErrorHandler();
+            $error_handler->registerShutdownFunction();
+        }
     }
 
     private function setupChannel($channel)
