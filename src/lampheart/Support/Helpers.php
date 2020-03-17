@@ -56,7 +56,7 @@ if (function_exists('lang') === false) {
             return '';
         }
 
-        $locale = app()::get('locale', 'en');
+        $locale = app()::get('locale', env('APP_LANG', 'en'));
 
         $langFilePath = dirname(dirname(dirname(__DIR__))).'/resources/lang/'.$locale;
 
