@@ -182,7 +182,7 @@ trait Request
      *
      * @return	string
      */
-    public function requestIPs()
+    public function requestIpArray()
     {
         $ip_address = [];
 
