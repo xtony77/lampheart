@@ -12,6 +12,7 @@ class Redis
     public static function set(string $key, string $value, int $expiration_in_seconds = null)
     {
         self::make();
+
         if (!empty($expiration_in_seconds)) {
             self::$client->setex($key, $expiration_in_seconds, $value);
         } else {
@@ -22,16 +23,14 @@ class Redis
     public static function get(string $key)
     {
         self::make();
-        if (self::$client->exists($key)) {
-            return self::$client->get($key);
-        } else {
-            return false;
-        }
+
+        return self::$client->get($key);
     }
 
     public static function del(string $key)
     {
         self::make();
+
         if (self::$client->exists($key)) {
             self::$client->del($key);
         }
@@ -39,20 +38,22 @@ class Redis
 
     private static function make()
     {
-        if (empty(env('REDIS_HOST')) || empty(env('REDIS_PORT'))) {
-            throw new \Exception('Empty redis host and port');
+        $path = dirname(dirname(dirname(dirname(dirname(dirname(__DIR__)))))).'/config/redis.php';
+
+        if (!is_file($path)) {
+            throw new \Exception('Redis config not exist: '.$path);
         }
 
-        $options = [
-            'scheme' => 'tcp',
-            'host'   => env('REDIS_HOST'),
-            'port'   => env('REDIS_PORT')
-        ];
+        $config = require $path;
 
-        if (!empty(env('REDIS_PASSWORD'))) {
-            $options['password'] = env('REDIS_PASSWORD');
+        if ($config['replication'] === true)
+        {
+            $parameters = $config['replications'];
+            $options    = ['replication' => true];
+            self::$client = new Client($parameters, $options);
+            return;
         }
 
-        self::$client = new Client($options);
+        self::$client = new Client($config['default']);
     }
 }
