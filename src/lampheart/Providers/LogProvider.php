@@ -39,8 +39,17 @@ class LogProvider
 
     private function errorHandler()
     {
+        set_error_handler(function ($code, $msg, $file, $line) {
+            throw new \Exception($msg);
+        });
+
         set_exception_handler(function ($e) {
+            Log::error('', [$e->getMessage()]);
+
+            http_response_code($e->getCode());
+
             echo Response::json([
+                $e->getCode(),
                 $e->getMessage(),
                 $e->getTrace()
             ]);
